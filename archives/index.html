@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives | Astiger&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Astiger's Blog">
+<meta property="og:url" content="http://yoursite.com/archives/">
+<meta property="og:site_name" content="Astiger's Blog">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Astiger's Blog">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Astiger&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Astiger&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-移植freemodbus" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/25/移植freemodbus/" class="article-date">
+  <time datetime="2014-06-25T13:51:12.000Z" itemprop="datePublished">Jun 25 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/25/移植freemodbus/">移植freemodbus</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/06/25/移植freemodbus/" data-id="xrr77zl25pyo0ccy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-git使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/08/git使用/" class="article-date">
+  <time datetime="2014-06-08T00:16:26.000Z" itemprop="datePublished">Jun 8 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/08/git使用/">Git使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>Git概念<br>1.1. Git库中由三部分组成<br>   Git 仓库就是那个.git 目录，其中存放的是我们所提交的文档索引内容，Git 可基于文档索引内容对其所管理的文档进行内容追踪，从而实现文档的版本控制。.git目录位于工作目录内。<br>1） 工作目录：用户本地的目录；<br>2） Index（索引）：将工作目录下所有文件（包含子目录）生成快照，存放到一个临时的存储区域，Git 称该区域为索引。<br>3） 仓库：将索引通过commit命令提交至仓库中，每一次提交都意味着版本在进行一次更新。<br>clip_image002<br>1.2. 使用Git时的初始化事项<br>1.2.1. Git初始化配置<br>1） 配置使用git仓库的人员姓名<br>   git config —global user.name “Your Name Comes Here”<br>2） 配置使用git仓库的人员email<br>   git config —global user.email you@yourdomain.example.com<br>1.2.2. Git文档忽略机制<br>工作目录中有一些文件是不希望接受Git 管理的，譬如程序编译时生成的中间文件等等。Git 提供了文档忽略机制，可以将工作目录中不希望接受Git 管理的文档信息写到同一目录下的.gitignore 文件中。<br>例如：工作目录下有个zh目录，如果不想把它加入到Git管理中，则执行：<br>   echo “zh” &gt; .gitignore<br>   git add .<br>有关gitignore 文件的诸多细节知识可阅读其使用手册：man gitignore<br>1.3. Git与Repo的比较<br>   Git操作一般对应一个仓库，而Repo操作一般对应一个项目，即一个项目会由若干仓库组成。<br>例如，在操作整个Recket项目时使用Repo，而操作其中的某个仓库时使用Git。在包含隐藏目录.git的目录下执行git操作。<ol>
+<li>Git help<br>Git help 获取git基本命令<br>（如果要知道某个特定命令的使用方法，例如：使用Git help clone，来获取git clone的使用方法）</li>
+<li>Git本地操作基本命令<br>3.1. Git init<br>或者使用git init-db。<br>创建一个空的Git库。在当前目录中产生一个.git 的子目录。以后，所有的文件变化信息都会保存到这个目录下，而不像CVS那样，会在每个目录和子目录下都创建一个CVS目录。<br>在.git目录下有一个config文件，可以修改其中的配置信息。<br>3.2. Git add<br>将当前工作目录中更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步。<br>可以递归添加，即如果后面跟的是一个目录作为参数，则会递归添加整个目录中的所有子目录和文件。例如：<br>git add dir1 （ 添加dir1这个目录，目录下的所有文件都被加入 ）<br>Git add f1 f2 （ 添加f1，f2文件）<br>git add .      ( 添加当前目录下的所有文件和子目录 )<br>3.3. Git rm<br>从当前的工作目录中和索引中删除文件。<br>可以递归删除，即如果后面跟的是一个目录做为参数，则会递归删除整个目录中的所有子目录和文件。例如：<br>git rm –r <em> （进入某个目录中，执行此语句，会删除该目录下的所有文件和子目录）<br>git rm f1    (删除文件f1，包含本地目录和index中的此文件记录)<br>git rm —ached f1 (删除文件f1，不会删除本地目录文件，只删除index中的文件记录；将已经git add的文件remove到cache中,这样commit的时候不会提交这个文件, 适用于一下子添加了很多文件, 却又想排除其中个别几个文件的情况.)<br>3.4. Git commit<br>提交当前工作目录的修改内容。<br>直接调用git commit命令，会提示填写注释。通过如下方式在命令行就填写提交注释：git commit -m “Initial commit of gittutor reposistory”。 注意，和CVS不同，git的提交注释必须不能为空，否则就会提交失败。<br>git commit还有一个 -a的参数，可以将那些没有通过git add标识的变化一并强行提交，但是不建议使用这种方式。<br>每一次提交，git就会为全局代码建立一个唯一的commit标识代码，用户可以通过git reset命令恢复到任意一次提交时的代码。<br>git commit –-amend –m “message” （在一个commit id上不断修改提交的内容）<br>3.5. Git status<br>查看版本库的状态。可以得知哪些文件发生了变化，哪些文件还没有添加到git库中等等。 建议每次commit前都要通过该命令确认库状态。<br>最常见的误操作是， 修改了一个文件， 没有调用git add通知git库该文件已经发生了变化就直接调用commit操作， 从而导致该文件并没有真正的提交。这时如果开发者以为已经提交了该文件，就继续修改甚至删除这个文件，那么修改的内容就没有通过版本管理起来。如果每次在 提交前，使用git status查看一下，就可以发现这种错误。因此，如果调用了git status命令，一定要格外注意那些提示为 “Changed but not updated:”的文件。 这些文件都是与上次commit相比发生了变化，但是却没有通过git add标识的文件。<br>3.6. Git log<br>查看历史日志，包含每次的版本变化。每次版本变化对应一个commit id。<br>Git log -1<br>-1的意思是只显示一个commit，如果想显示5个，就-5。不指定的话，git log会从该commit一直往后显示。<br>Git log —stat –summary （显示每次版本的详细变化）<br>在项目日志信息中，每条日志的首行（就是那一串字符）为版本更新提交所进行的命名，我们可以将该命名理解为项目版本号。项目版本号应该是唯一的，默认由 Git 自动生成，用以标示项目的某一次更新。如果我们将项目版本号用作git-show 命令的参数，即可查看该次项目版本的更新细节。例如：<br>1) Git log<br>clip_image004<br>2）Git show<br>clip_image006<br>实际上，上述命令并非是真正的进行版本号自定义，只是制造了一个tag对象而已，这在进行项目版本对外发布时比较有用。<br>3.7. Git merge<br>把服务器上下载下来的代码和本地代码合并。或者进行分支合并。<br>例如：当前在master分支上，若想将分支dev上的合并到master上，则git merge dev<br>注意：git merge nov/eclair_eocket （是将服务器git库的eclair_eocket分支合并到本地分支上）<br>git rebase nov/eclair_eocket （是将服务器git库的eclair_eocket分支映射到本地的一个临时分支上，然后将本地分支上的变化合并到这个临时分支，然后再用这个临时分支初始化本地分支）<br>3.8. Git diff<br>把本地的代码和index中的代码进行比较，或者是把index中的代码和本地仓库中的代码进行比较。<br>1） Git diff<br>比较工作目录和Index中的代码。<br>2） Git diff - - cached<br>比较index和本地仓库中的代码。<br>3.9. Git checkout<br>3.9.1. 切换到分支<br>1) 创建一个新分支，并切换到该分支上<br>Git checkout –b 新分支名<br>2）切换到某个已经建立的本地分支local_branch<br>Git checkout local_branch<br>（使用cat .git/HEAD后，显示refs:refs/heads/ local_branch）<br>3) 切换到服务器上的某个分支remote_branch<br>Git checkout remote_branch<br>（远程分支remote_branch可以通过 git branch –r 列出）<br>4) 切换到某个commit id<br>Git checkout commit_id<br>（使用cat .git/HEAD后，显示commit_id）<br>5) 切换到某个tag<br>Git checkout tag<br>（使用cat .git/HEAD后，显示tag）<br>注意： 除了1）和2）外，其余三种都只是切换到了一个临时的( no branch )状态 （this head is detached），这时用 git branch 可以看到处于（no branch）上， cat .git/HEAD 看到指向相应的commit id。 这个（no branch）只是临时存在的，并不是一个真正建立的branch。 如果此时执行2），则这个（no branch）就自动消失了；如果执行1）， 则创建新分支 new branch，并把这个(no branch)挂到这个新分支上，此时cat .git/refs/heads/new_branch 可以看到已经指向了刚才那个commit id。<br>3.9.2. 用已有分支初始化新分支<br>执行下面的命令，在切换到某个已经建立的local branch或者某个remote branch或者某个commit id 或者某个tag的同时，创建新分支new_branch，并且挂到这个新分支上。<br>1） 切换到某个已经建立的本地分支local_branch，并且使用此分支初始化一个新分支new_branch。<br>git checkout –b new_branch local_branch<br>2) 切换到某个远程分支remote_branch，并且用此分支初始化一个新分支new_branch。<br>Git checkout –b new_branch remote_branch<br>3) 切换到某个commit id，并建立新分支new_branch<br>Git checkout –b new_branch commit_id<br>4) 切换到某个tag，并建立新分支new_branch<br>Git checkout –b new_branch tag<br>3.9.3. 还原代码<br>例如 “git checkout app/model/user.rb” 就会将user.rb文件从上一个已提交的版本中更新回来，未提交的工作目录中的内容全部会被覆盖。<br>3.10. Git-ls-files<br>查看当前的git库中有那些文件。<br>3.11. Git mv<br>重命名一个文件、目录或者链接。<br>例如：Git mv helloworld.c helloworld1.c （把文件helloworld.c 重命名为 helloworld1.c）<br>3.12. Git branch<br>3.12.1. 总述<br>在 git 版本库中创建分支的成本几乎为零，所以，不必吝啬多创建几个分支。当第一次执行git init时，系统就会创建一个名为“master”的分支。 而其它分支则通过手工创建。<br>下面列举一些常见的分支策略：<br>创建一个属于自己的个人工作分支，以避免对主分支 master 造成太多的干扰，也方便与他人交流协作；<br>当进行高风险的工作时，创建一个试验性的分支；<br>合并别人的工作的时候，最好是创建一个临时的分支用来合并，合并完成后再“fetch”到自己的分支。<br>对分支进行增、删、查等操作。<br>注意：分支信息一般在.git/refs/目录下，其中heads目录下为本地分支，remotes为对应服务器上的分支，tags为标签。<br>3.12.2. 查看分支<br>git branch 列出本地git库中的所有分支。在列出的分支中，若分支名前有</em>，则表示此分支为当前分支。<br>git branch –r 列出服务器git库的所有分支。<br>（可以继续使用命令 “ git checkout -b 本地分支名 服务器分支名”来获取服务器上某个分支的代码文件）。<br>3.12.3. 查看当前在哪个分支上<br>cat .git/HEAD<br>3.12.4. 创建一个分支<br>1） git branch 分支名<br>虽然创建了分支，但是不会将当前工作分支切换到新创建的分支上，因此，还需要命令“git checkout 分支名” 来切换，<br>2） git checout –b 分支名<br>不但创建了分支，还将当前工作分支切换到了该分支上。<br>3.12.5. 切换到某个分支：git checkout 分支名<br>切换到主分支：git checkout master<br>3.12.6. 删除分支<br>git branch –D 分支名<br>注意： 删除后，发生在该分支的所有变化都无法恢复。强制删除此分支。<br>3.12.7. 比较两个分支上的文件的区别<br>git diff master 分支名 （比较主分支和另一个分支的区别）<br>3.12.8. 查看分支历史<br>git-show-branch （查看当前分支的提交注释及信息）<br>git-show-branch -all（查看所有分支的提交注释及信息）例如： </li>
+</ol>
+<ul>
+<li>[dev] d2 <h2 id="!_[master]_m2_">! [master] m2 </h2>
+</li>
+<li>[dev] d2 </li>
+<li>[dev^] d1 </li>
+<li>[dev~2] d0<br>*+ [master] m2<br>在上述例子中， “—”之上的两行表示有两个分支dev和master， 且dev分支上最后一次提交的日志是“d2”,master分支上最后一次提交的日志是 “m2”。 “—”之下的几行表示了分支演化的历史，其中 dev表示发生在dev分支上的最后一次提交，dev^表示发生在dev分支上的倒数第二次提交。dev~2表示发生在dev分支上的倒数第三次提交。<br>3.12.9. 查看当前分支的操作记录<br> git whatchanged<br>3.12.10. 合并分支<br>法一：<br> git merge “注释” 合并的目标分支 合并的来源分支<br>如果合并有冲突，git会有提示。<br>例如：git checkout master   （切换到master分支）<br> git merge HEAD dev~2 (合并master分支和dev~2分支)或者：git merge master dev~2<br>法二：<br> git pull 合并的目标分支 合并的来源分支<br>例如: git checkout master （切换到master分支）<br> git pull . dev~2（合并当前分支和dev~2分支）<br>3.13. Git rebase<br>一般在将服务器最新内容合并到本地时使用，例如：在版本C时从服务器上获取内容到本地，修改了本地内容，此时想把本地修改的内容提交到服务器上；但发现服务器上的版本已经变为G了，此时就需要先执行Git rebase，将服务器上的最新版本合并到本地。例如：<br>用下面两幅图解释会比较清楚一些，rebase命令执行后，实际上是将分支点从C移到了G，这样分支也就具有了从C到G的功能。 </li>
+</ul>
+</li>
+</ol>
+<p>3.14. Git reset<br>库的逆转与恢复除了用来进行一些废弃的研发代码的重置外，还有一个重要的作用。比如我们从远程clone了一个代码库，在本地开发后，准备提交回远程。但是本地代码库在开发时，有功能性的commit，也有出于备份目的的commit等等。总之，commit的日志中有大量无用log，我们并不想把这些 log在提交回远程时也提交到库中。 因此，就要用到git reset。<br>       git reset的概念比较复杂。它的命令形式：git reset [—mixed | —soft | —hard] [<commit-ish>]<br>命令的选项：<br>       —mixed 这个是默认的选项。如git reset [—mixed] dev^(dev^的定义可以参见2.6.5)。它的作用仅是重置分支状态到dev1^, 但是却不改变任何工作文件的内容。即，从dev1^到dev1的所有文件变化都保留了，但是dev1^到dev1之间的所有commit日志都被清除了， 而且，发生变化的文件内容也没有通过git add标识，如果您要重新commit，还需要对变化的文件做一次git add。 这样，commit后，就得到了一份非常干净的提交记录。 （回退了index和仓库中的内容）<br>       —soft相当于做了git reset –mixed，后，又对变化的文件做了git add。如果用了该选项， 就可以直接commit了。（回退了仓库中的内容）<br>       —hard这个命令就会导致所有信息的回退， 包括文件内容。 一般只有在重置废弃代码时，才用它。 执行后，文件内容也无法恢复回来了。（回退了工作目录、index和仓库中的内容）<br>例如：<br>切换到使用的分支上；<br>       git reset HEAD^ 回退第一个记录<br>       git reset HEAD~2 回退第二个记录<br>如果想把工作目录下的文件也回退，则使用git reset - - hard HEAD^ 回退第一个记录<br>       git reset - - hard HEAD~2 回退第二个记录<br>还可以使用如下方法：<br>将当前的工作目录完全回滚到指定的版本号，假设如下图，我们有A-G五次提交的版本，其中C的版本号是 bbaf6fb5060b4875b18ff9ff637ce118256d6f20，我们执行了’git reset bbaf6fb5060b4875b18ff9ff637ce118256d6f20’那么结果就只剩下了A-C三个提交的版本 </commit-ish></p>
+<p>3.15. Git revert<br>还原某次对版本的修改，例如：git revert commit_id （其中commit_id为commit代码时生成的一个唯一表示的字符串）<br>例如：（3.6中）git revert dfb02e6e4f2f7b573337763e5c0013802e392818 （执行此操作，则还原上一次commit的操作）<br>3.16. Git config<br>利用这个命令可以新增、更改Git的各种设置，例如 “git config branch.master.remote origin” 就将master的远程版本库设置为别名叫做origin版本库。<br>3.17. Git show<br>显示对象的不同类型。<br>3.18. Git tag<br>创建、列出、删除或者验证一个标签对象（使用GPG签名的）。<br>可以将某个具体的版本打上一个标签，这样就不需要记忆复杂的版本号哈希值字符串了，例如你可以使用 “git tag revert_version bbaf6fb5060b4875b18ff9ff637ce118256d6f20” 来标记这个被你还原的版本，那么以后你想查看该版本时，就可以使用 revert_version标签名，而不是哈希值了。</p>
+<ol>
+<li>Git服务器操作命令（与服务器交互）<br>4.1. Git clone<br>取出服务器的仓库的代码到本地建立的目录中（与服务器交互）<br>通过git clone获取远端git库后，.git/config中的开发者信息不会被一起clone过来。仍然需要为本地库的.git/config文件添加开发者信息。此外，开发者还需要自己添加   . gitignore文件。<br>通过git clone获取的远端git库，只包含了远端git库的当前工作分支。如果想获取其它分支信息，需要使用 “git branch –r” 来查看， 如果需要将远程的其它分支代码也获取过来，可以使用命令 “ git checkout -b 本地分支名 远程分支名”，其中，远程分支名为 “git branch –r” 所列出的分支名， 一般是诸如“origin/分支名”的样子。如果本地分支名已经存在， 则不需要“-b”参数。 </li>
+</ol>
+<p>4.2. Git pull<br>从服务器的仓库中获取代码，和本地代码合并。（与服务器交互，从服务器上下载最新代码，等同于： Git fetch + Git merge）<br>从其它的版本库（既可以是远程的也可以是本地的）将代码更新到本地，例如：“git pull origin master ”就是将origin这个版本库的代码更新到本地的master主分支。<br>       git pull可以从任意一个git库获取某个分支的内容。用法如下：<br>git pull username@ipaddr:远端repository名远端分支名 本地分支名。这条命令将从远端git库的远端分支名获取到本地git库的一个本地分支中。其中，如果不写本地分支名，则默认pull到本地当前分支。<br>需要注意的是，git pull也可以用来合并分支。 和git merge的作用相同。 因此，如果你的本地分支已经有内容，则git pull会合并这些文件，如果有冲突会报警。 </p>
+<p>4.3. Git push<br>将本地commit的代码更新到远程版本库中，例如 “git push origin”就会将本地的代码更新到名为orgin的远程版本库中。<br>       git push和git pull正好想反，是将本地某个分支的内容提交到远端某个分支上。用法： git pushusername@ipaddr:远端repository名本地分支名 远端分支名。这条命令将本地git库的一个本地分支push到远端git库的远端分支名中。<br>需要格外注意的是，git push好像不会自动合并文件。因此，如果git push时，发生了冲突，就会被后push的文件内容强行覆盖，而且没有什么提示。 这在合作开发时是很危险的事情。 </p>
+<p>4.4. Git fetch<br>从服务器的仓库中下载代码。（与服务器交互，从服务器上下载最新代码）<br>相当于从远程获取最新版本到本地，不会自动merge，比Git pull更安全些。<br>使用此方法来获取服务器上的更新。<br>例如：如果使用git checkout nov/eclair_rocket （nov/eclair_rocket为服务器上的分支名），则是获取上次使用git fetch命令时从服务器上下载的代码；如果先使用 git fetch ，再使用git checkout nov/eclair_rocket，则是先从服务器上获取最新的更新信息，然后从服务器上下载最新的代码。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/06/08/git使用/" data-id="d4jtn1qf3ftm3pj3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ds18b20驱动移植到stm32上" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/17/ds18b20驱动移植到stm32上/" class="article-date">
+  <time datetime="2014-05-17T12:09:27.000Z" itemprop="datePublished">May 17 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/17/ds18b20驱动移植到stm32上/">DS18B20驱动移植到STM32上</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DS18B20的驱动移植到STM32上">DS18B20的驱动移植到STM32上</h1>
+<h2 id="下面说下几个关键点吧：">下面说下几个关键点吧：</h2>
+<h3 id="首先是延时的问题">首先是延时的问题</h3>
+<p>STM32上若用软件延时的话不太好算时间，所以要么用定时器要么用SysTick这个定时器来完成延时的计算。相比之下用SysTick来的简单方便点。</p>
+<h3 id="接着是STM32_IO脚的配置问题">接着是STM32 IO脚的配置问题</h3>
+<p>因为51是双向的IO，所以作为输入输出都比较方便。STM32的IO是准双向的IO，网上查了下资料，说将STM32的IO配置成开漏输出，然后外接上拉即可实现双向IO。</p>
+<h2 id="下面引用一段DS18B20的时序描述，写的很详细:">下面引用一段DS18B20的时序描述，写的很详细:</h2>
+<p>DS18B20的控制流程</p>
+<ul>
+<li>根据DS18B20的通信协议，DS18B20只能作为从机，而单片机系统作为主机，单片机控制DS18B20完成一次温度转换必须经过3个步骤：复位、发送ROM指令、发送RAM指令。每次对DS18B20的操作都要进行以上三个步骤。</li>
+<li>复位过程为：单片机将数据线拉低至少480uS，然后释放数据线，等待15-60uS让DS18B20接收信号，DS18B20接收到信号后，会把数据线拉低60-240uS，主机检测到数据线被拉低后标识复位成功；</li>
+<li>发送ROM指令：ROM指令表示主机对系统上所接的全部DS18B20进行寻址，以确定对那一个DS18B20进行操作，或者是读取某个DS18B20的ROM序列号。</li>
+<li>发送RAM指令：RAM指令用于单片机对DS18B20内部RAM进行操作，如读取寄存器的值，或者设置寄存器的值。<br>具体的RAM和RAM指令请查阅DS18B20的数据手册。</li>
+</ul>
+<hr>
+<h3 id="ROM和RAM指令简单介绍："><strong>ROM和RAM指令简单介绍</strong>：</h3>
+<p>具体的ROM和RAM指令请查阅DS18B20的数据手册。</p>
+<h4 id="1-_ROM操作命令：">1. ROM操作命令：</h4>
+<p>DS18B20采用一线通信接口。因为一线通信接口，必须在先完成ROM设定，否则记忆和控制功能将无法使用。一旦总线检测到从属器件的存在，它便可以发出器件ROM操作指令，所有ROM操作指令均为8位长度，主要提供以下功能命令：</p>
+<ol>
+<li>读ROM（指令码0X33H）：当总线上只有一个节点（器件）时，读此节点的64位序列号。如果总线上存在多于一个的节点，则此指令不能使用。</li>
+<li>ROM匹配（指令码0X55H）：此命令后跟64位的ROM序列号，总线上只有与此序列号相同的DS18B20才会做出反应；该指令用于选中某个DS18B20，然后对该DS18B20进行读写操作。</li>
+<li>搜索ROM（指令码0XF0H）： 用于确定接在总线上DS18B20的个数和识别所有的64位ROM序列号。当系统开始工作，总线主机可能不知道总线上的器件个数或者不知道其64位ROM序列号，搜索命令用于识别所有连接于总线上的64位ROM序列号。</li>
+<li>跳过ROM（指令码0XCCH）： 此指令只适合于总线上只有一个节点；该命令通过允许总线主机不提供64位ROM序列号而直接访问RAM，以节省操作时间。</li>
+<li>报警检查（指令码0XECH）：此指令与搜索ROM指令基本相同，差别在于只有温度超过设定的上限或者下限值的DS18B20才会作出响应。只要DS18B20一上电，告警条件就保持在设置状态，直到另一次温度测量显示出非告警值，或者改变TH或TL的设置使得测量值再一次位于允许的范围之内。储存在EEPROM内的触发器用于告警。</li>
+</ol>
+<h4 id="2-_RAM指令">2. RAM指令</h4>
+<p>   DS18B20有六条RAM命令：</p>
+<ol>
+<li>温度转换（指令码0X44H）:启动DS18B20进行温度转换，结果存入内部RAM。</li>
+<li>读暂存器（指令码0XBEH）：读暂存器9个字节内容，此指令从RAM的第1个字节（字节0）开始读取，直到九个字节（字节8，CRC值）被读出为止。如果不需要读出所有字节的内容，那么主机可以在任何时候发出复位信号以中止读操作。</li>
+<li>写暂存器（指令码0X4EH）： 将上下限温度报警值和配置数据写入到RAM的2、3、4字节，此命令后跟需要些入到这三个字节的数据。</li>
+<li>复制暂存器（指令码0X48H）：把暂存器的2、3、4字节复制到EEPROM中，用以掉电保存。</li>
+<li>重新调E2RAM（指令码0XB8H）：把EEROM中的温度上下限及配置字节恢复到RAM的2、3、4字节，用以上电后恢复以前保存的报警值及配置字节。</li>
+<li>读电源供电方式（指令码0XB4H）：启动DS18B20发送电源供电方式的信号给主CPU。对于在此命令送至DS18B20后所发出的第一次读出数据的时间片，器件都会给出其电源方式的信号。“0”表示寄生电源供电。“1”表示外部电源供电。</li>
+</ol>
+<h3 id="下面是结合实际测试总结出来的DS18B20的操作流程：">下面是结合实际测试总结出来的DS18B20的操作流程：</h3>
+<h5 id="1-_DS18B20的初始化">1. DS18B20的初始化</h5>
+<ol>
+<li>先将数据线置高电平“1”。</li>
+<li>延时（该时间要求的不是很严格，但是尽可能的短一点）。</li>
+<li>数据线拉到低电平“0”。</li>
+<li>延时490微秒（该时间的时间范围可以从480到960微秒）。</li>
+<li>数据线拉到高电平“1”。</li>
+<li>延时等待（如果初始化成功则在15到60毫秒时间之内产生一个由DS18B20所返回的低电平“0”。据该状态可以来确定它的存在，但是应注意不能无限的进行等待，不然会使程序进入死循环，所以要进行超时控制）。</li>
+<li>若CPU读到了数据线上的低电平“0”后，还要做延时，其延时的时间从发出的高电平算起（第（5）步的时间算起）最少要480微秒。</li>
+<li>将数据线再次拉高到高电平“1”后结束。　　<h5 id="2-_DS18B20的写操作">2. DS18B20的写操作</h5>
+<ol>
+<li>数据线先置低电平“0”。</li>
+<li>延时确定的时间为2(小于15)微秒。</li>
+<li>按从低位到高位的顺序发送字节（一次只发送一位）。</li>
+<li>延时时间为62（大于60）微秒。</li>
+<li>将数据线拉到高电平，延时2(小于15)微秒。</li>
+<li>重复上（1）到（6）的操作直到所有的字节全部发送完为止。</li>
+<li>最后将数据线拉高。　　<h5 id="3-_DS18B20的读操作">3. DS18B20的读操作</h5>
+</li>
+<li>将数据线拉高“1”。</li>
+<li>延时2微秒。</li>
+<li>将数据线拉低“0”。</li>
+<li>延时2（小于15）微秒。</li>
+<li>将数据线拉高“1”，同时端口应为输入状态。</li>
+<li>延时4（小于15）微秒。</li>
+<li>读数据线的状态得到1个状态位，并进行数据处理。</li>
+<li>延时62（大于60）微秒。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/image//187Fig03.gif" alt="" title="A simple search example with three devices"><br><img src="/image//187Fig03b.gif" alt=""><br><img src="/image//187Fig03c.gif" alt=""><br>例程可参考<a href="http://pdfserv.maximintegrated.com/en/an/AN162.pdf" title="DS18B20 Application Note 162" target="_blank" rel="external">DS18B20 Application Note 162</a>.<br>参考资料来源于网友博客<a href="http://blog.csdn.net/lghtjpu/article/details/5439344" target="_blank" rel="external">STM32下DS18B20的驱动</a>，为尊重网友劳动，给出链接。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/17/ds18b20驱动移植到stm32上/" data-id="546o0h0bc06r21ya" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-在rt-thread下移植lwip到stm32、dm9000a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" class="article-date">
+  <time datetime="2014-05-16T11:48:24.000Z" itemprop="datePublished">May 16 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">在RT-Thread下移植LWip到STM32、DM9000A</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DM9000A初始化模块">DM9000A初始化模块</h1>
+<p>DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：</p>
+<ul>
+<li>激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    </li>
+<li>进行两次软复位，步骤如下：<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；      </li>
+<li>配置NCR寄存器；<br>设置NCR(REG_00)bit[2：1]=00；配置为正常模式。<br>通过改变该寄存器可以选择设置内部或者外部PHY、全双工或者半双工模式、使能唤醒事件等网络操作。      </li>
+<li>清除发送状态；<br>设置NSR(REG_01)bit[5]=1bit[3]=1 bit[2]=1；</li>
+<li>设置IMR寄存器(REG_FF)PAR bit[7]=1，以启用RX／TX FIFOSRAM读／写地址指针自动返回功能；      </li>
+<li>通过IMR寄存器(REG_FF)PRM bit[0]／PTM bit[1]，对RX／TX中断使能。如果需要在一个数据帧发送完后产生一个中断，就应该将PTM      bit[1]置1，如果需要在接收到一帧新数据时产生一个中断，就应该将PRM bit[1]置1；     </li>
+<li>设置RCR寄存器，使能数据接收功能。</li>
+<li>NCR   (0x00): 08<br>NSR   (0x01): 80<br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 01<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 03<br>NCR   (0x00): 08<!-- 内部PHY全双工模式 --><br>NSR   (0x01): 80<!-- 6 LINKST连接状态 0为连接失败 --><br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 31<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 83<br>通过以上步骤，可以通过LED指示灯观测到DM9000A是否已成功初始化。<h2 id="1">1</h2>
+<span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span> <h3 id="1-1">1.1</h3>
+<h3 id="1-2">1.2</h3>
+<h2 id="2">2</h2>
+<h1 id="End">End</h1>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" data-id="ja7s34sh3qvxc1k8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/15/hello-world/" class="article-date">
+  <time datetime="2014-05-14T21:22:59.000Z" itemprop="datePublished">May 15 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/15/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/15/hello-world/" data-id="az3znw6gmezucppx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/06/25/移植freemodbus/">移植freemodbus</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/08/git使用/">Git使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/17/ds18b20驱动移植到stm32上/">DS18B20驱动移植到STM32上</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">在RT-Thread下移植LWip到STM32、DM9000A</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/15/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Tiger Wang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

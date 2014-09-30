@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Archives: 2014/5 | Astiger&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Astiger's Blog">
+<meta property="og:url" content="http://yoursite.com/archives/2014/05/">
+<meta property="og:site_name" content="Astiger's Blog">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Astiger's Blog">
+<meta name="twitter:description">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Astiger&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Astiger&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-ds18b20驱动移植到stm32上" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/17/ds18b20驱动移植到stm32上/" class="article-date">
+  <time datetime="2014-05-17T12:09:27.000Z" itemprop="datePublished">May 17 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/17/ds18b20驱动移植到stm32上/">DS18B20驱动移植到STM32上</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DS18B20的驱动移植到STM32上">DS18B20的驱动移植到STM32上</h1>
+<h2 id="下面说下几个关键点吧：">下面说下几个关键点吧：</h2>
+<h3 id="首先是延时的问题">首先是延时的问题</h3>
+<p>STM32上若用软件延时的话不太好算时间，所以要么用定时器要么用SysTick这个定时器来完成延时的计算。相比之下用SysTick来的简单方便点。</p>
+<h3 id="接着是STM32_IO脚的配置问题">接着是STM32 IO脚的配置问题</h3>
+<p>因为51是双向的IO，所以作为输入输出都比较方便。STM32的IO是准双向的IO，网上查了下资料，说将STM32的IO配置成开漏输出，然后外接上拉即可实现双向IO。</p>
+<h2 id="下面引用一段DS18B20的时序描述，写的很详细:">下面引用一段DS18B20的时序描述，写的很详细:</h2>
+<p>DS18B20的控制流程</p>
+<ul>
+<li>根据DS18B20的通信协议，DS18B20只能作为从机，而单片机系统作为主机，单片机控制DS18B20完成一次温度转换必须经过3个步骤：复位、发送ROM指令、发送RAM指令。每次对DS18B20的操作都要进行以上三个步骤。</li>
+<li>复位过程为：单片机将数据线拉低至少480uS，然后释放数据线，等待15-60uS让DS18B20接收信号，DS18B20接收到信号后，会把数据线拉低60-240uS，主机检测到数据线被拉低后标识复位成功；</li>
+<li>发送ROM指令：ROM指令表示主机对系统上所接的全部DS18B20进行寻址，以确定对那一个DS18B20进行操作，或者是读取某个DS18B20的ROM序列号。</li>
+<li>发送RAM指令：RAM指令用于单片机对DS18B20内部RAM进行操作，如读取寄存器的值，或者设置寄存器的值。<br>具体的RAM和RAM指令请查阅DS18B20的数据手册。</li>
+</ul>
+<hr>
+<h3 id="ROM和RAM指令简单介绍："><strong>ROM和RAM指令简单介绍</strong>：</h3>
+<p>具体的ROM和RAM指令请查阅DS18B20的数据手册。</p>
+<h4 id="1-_ROM操作命令：">1. ROM操作命令：</h4>
+<p>DS18B20采用一线通信接口。因为一线通信接口，必须在先完成ROM设定，否则记忆和控制功能将无法使用。一旦总线检测到从属器件的存在，它便可以发出器件ROM操作指令，所有ROM操作指令均为8位长度，主要提供以下功能命令：</p>
+<ol>
+<li>读ROM（指令码0X33H）：当总线上只有一个节点（器件）时，读此节点的64位序列号。如果总线上存在多于一个的节点，则此指令不能使用。</li>
+<li>ROM匹配（指令码0X55H）：此命令后跟64位的ROM序列号，总线上只有与此序列号相同的DS18B20才会做出反应；该指令用于选中某个DS18B20，然后对该DS18B20进行读写操作。</li>
+<li>搜索ROM（指令码0XF0H）： 用于确定接在总线上DS18B20的个数和识别所有的64位ROM序列号。当系统开始工作，总线主机可能不知道总线上的器件个数或者不知道其64位ROM序列号，搜索命令用于识别所有连接于总线上的64位ROM序列号。</li>
+<li>跳过ROM（指令码0XCCH）： 此指令只适合于总线上只有一个节点；该命令通过允许总线主机不提供64位ROM序列号而直接访问RAM，以节省操作时间。</li>
+<li>报警检查（指令码0XECH）：此指令与搜索ROM指令基本相同，差别在于只有温度超过设定的上限或者下限值的DS18B20才会作出响应。只要DS18B20一上电，告警条件就保持在设置状态，直到另一次温度测量显示出非告警值，或者改变TH或TL的设置使得测量值再一次位于允许的范围之内。储存在EEPROM内的触发器用于告警。</li>
+</ol>
+<h4 id="2-_RAM指令">2. RAM指令</h4>
+<p>   DS18B20有六条RAM命令：</p>
+<ol>
+<li>温度转换（指令码0X44H）:启动DS18B20进行温度转换，结果存入内部RAM。</li>
+<li>读暂存器（指令码0XBEH）：读暂存器9个字节内容，此指令从RAM的第1个字节（字节0）开始读取，直到九个字节（字节8，CRC值）被读出为止。如果不需要读出所有字节的内容，那么主机可以在任何时候发出复位信号以中止读操作。</li>
+<li>写暂存器（指令码0X4EH）： 将上下限温度报警值和配置数据写入到RAM的2、3、4字节，此命令后跟需要些入到这三个字节的数据。</li>
+<li>复制暂存器（指令码0X48H）：把暂存器的2、3、4字节复制到EEPROM中，用以掉电保存。</li>
+<li>重新调E2RAM（指令码0XB8H）：把EEROM中的温度上下限及配置字节恢复到RAM的2、3、4字节，用以上电后恢复以前保存的报警值及配置字节。</li>
+<li>读电源供电方式（指令码0XB4H）：启动DS18B20发送电源供电方式的信号给主CPU。对于在此命令送至DS18B20后所发出的第一次读出数据的时间片，器件都会给出其电源方式的信号。“0”表示寄生电源供电。“1”表示外部电源供电。</li>
+</ol>
+<h3 id="下面是结合实际测试总结出来的DS18B20的操作流程：">下面是结合实际测试总结出来的DS18B20的操作流程：</h3>
+<h5 id="1-_DS18B20的初始化">1. DS18B20的初始化</h5>
+<ol>
+<li>先将数据线置高电平“1”。</li>
+<li>延时（该时间要求的不是很严格，但是尽可能的短一点）。</li>
+<li>数据线拉到低电平“0”。</li>
+<li>延时490微秒（该时间的时间范围可以从480到960微秒）。</li>
+<li>数据线拉到高电平“1”。</li>
+<li>延时等待（如果初始化成功则在15到60毫秒时间之内产生一个由DS18B20所返回的低电平“0”。据该状态可以来确定它的存在，但是应注意不能无限的进行等待，不然会使程序进入死循环，所以要进行超时控制）。</li>
+<li>若CPU读到了数据线上的低电平“0”后，还要做延时，其延时的时间从发出的高电平算起（第（5）步的时间算起）最少要480微秒。</li>
+<li>将数据线再次拉高到高电平“1”后结束。　　<h5 id="2-_DS18B20的写操作">2. DS18B20的写操作</h5>
+<ol>
+<li>数据线先置低电平“0”。</li>
+<li>延时确定的时间为2(小于15)微秒。</li>
+<li>按从低位到高位的顺序发送字节（一次只发送一位）。</li>
+<li>延时时间为62（大于60）微秒。</li>
+<li>将数据线拉到高电平，延时2(小于15)微秒。</li>
+<li>重复上（1）到（6）的操作直到所有的字节全部发送完为止。</li>
+<li>最后将数据线拉高。　　<h5 id="3-_DS18B20的读操作">3. DS18B20的读操作</h5>
+</li>
+<li>将数据线拉高“1”。</li>
+<li>延时2微秒。</li>
+<li>将数据线拉低“0”。</li>
+<li>延时2（小于15）微秒。</li>
+<li>将数据线拉高“1”，同时端口应为输入状态。</li>
+<li>延时4（小于15）微秒。</li>
+<li>读数据线的状态得到1个状态位，并进行数据处理。</li>
+<li>延时62（大于60）微秒。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/image//187Fig03.gif" alt="" title="A simple search example with three devices"><br><img src="/image//187Fig03b.gif" alt=""><br><img src="/image//187Fig03c.gif" alt=""><br>例程可参考<a href="http://pdfserv.maximintegrated.com/en/an/AN162.pdf" title="DS18B20 Application Note 162" target="_blank" rel="external">DS18B20 Application Note 162</a>.<br>参考资料来源于网友博客<a href="http://blog.csdn.net/lghtjpu/article/details/5439344" target="_blank" rel="external">STM32下DS18B20的驱动</a>，为尊重网友劳动，给出链接。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/17/ds18b20驱动移植到stm32上/" data-id="546o0h0bc06r21ya" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-在rt-thread下移植lwip到stm32、dm9000a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" class="article-date">
+  <time datetime="2014-05-16T11:48:24.000Z" itemprop="datePublished">May 16 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">在RT-Thread下移植LWip到STM32、DM9000A</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DM9000A初始化模块">DM9000A初始化模块</h1>
+<p>DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：</p>
+<ul>
+<li>激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    </li>
+<li>进行两次软复位，步骤如下：<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；      </li>
+<li>配置NCR寄存器；<br>设置NCR(REG_00)bit[2：1]=00；配置为正常模式。<br>通过改变该寄存器可以选择设置内部或者外部PHY、全双工或者半双工模式、使能唤醒事件等网络操作。      </li>
+<li>清除发送状态；<br>设置NSR(REG_01)bit[5]=1bit[3]=1 bit[2]=1；</li>
+<li>设置IMR寄存器(REG_FF)PAR bit[7]=1，以启用RX／TX FIFOSRAM读／写地址指针自动返回功能；      </li>
+<li>通过IMR寄存器(REG_FF)PRM bit[0]／PTM bit[1]，对RX／TX中断使能。如果需要在一个数据帧发送完后产生一个中断，就应该将PTM      bit[1]置1，如果需要在接收到一帧新数据时产生一个中断，就应该将PRM bit[1]置1；     </li>
+<li>设置RCR寄存器，使能数据接收功能。</li>
+<li>NCR   (0x00): 08<br>NSR   (0x01): 80<br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 01<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 03<br>NCR   (0x00): 08<!-- 内部PHY全双工模式 --><br>NSR   (0x01): 80<!-- 6 LINKST连接状态 0为连接失败 --><br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 31<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 83<br>通过以上步骤，可以通过LED指示灯观测到DM9000A是否已成功初始化。<h2 id="1">1</h2>
+<span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span> <h3 id="1-1">1.1</h3>
+<h3 id="1-2">1.2</h3>
+<h2 id="2">2</h2>
+<h1 id="End">End</h1>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" data-id="ja7s34sh3qvxc1k8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/15/hello-world/" class="article-date">
+  <time datetime="2014-05-14T21:22:59.000Z" itemprop="datePublished">May 15 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/15/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/15/hello-world/" data-id="az3znw6gmezucppx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/06/25/移植freemodbus/">移植freemodbus</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/08/git使用/">Git使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/17/ds18b20驱动移植到stm32上/">DS18B20驱动移植到STM32上</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">在RT-Thread下移植LWip到STM32、DM9000A</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/15/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Tiger Wang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>

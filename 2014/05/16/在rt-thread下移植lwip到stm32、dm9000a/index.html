@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在RT-Thread下移植LWip到STM32、DM9000A | Astiger&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DM9000A初始化模块
+DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：
+
+激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    
+进行两次软复位，步骤如下：设置NCR(REG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在RT-Thread下移植LWip到STM32、DM9000A">
+<meta property="og:url" content="http://yoursite.com/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">
+<meta property="og:site_name" content="Astiger's Blog">
+<meta property="og:description" content="DM9000A初始化模块
+DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：
+
+激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    
+进行两次软复位，步骤如下：设置NCR(REG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在RT-Thread下移植LWip到STM32、DM9000A">
+<meta name="twitter:description" content="DM9000A初始化模块
+DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：
+
+激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    
+进行两次软复位，步骤如下：设置NCR(REG">
+
+  
+    <link rel="alternative" href="/atom.xml" title="Astiger&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Astiger&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-在rt-thread下移植lwip到stm32、dm9000a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" class="article-date">
+  <time datetime="2014-05-16T11:48:24.000Z" itemprop="datePublished">May 16 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在RT-Thread下移植LWip到STM32、DM9000A
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DM9000A初始化模块">DM9000A初始化模块</h1>
+<p>DM9000A正常工作需要在上电后对内部寄存器进行初始化，该过程通过对DM9000A外部控制总线和数据总线的读写操作完成。具体流程如下所示：</p>
+<ul>
+<li>激活PHY        设置GPR(REG_1F)CEPIO0bit[0]=0；        复位后，DM9000A恢复默认的休眠状态，以降低功耗，因此需要首先唤醒PHY。    </li>
+<li>进行两次软复位，步骤如下：<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；<br>设置NCR(REG_00)bit[2：0]=011，至少保持20μs；<br>清除NCR(REG_00)bit[2：0]=000；      </li>
+<li>配置NCR寄存器；<br>设置NCR(REG_00)bit[2：1]=00；配置为正常模式。<br>通过改变该寄存器可以选择设置内部或者外部PHY、全双工或者半双工模式、使能唤醒事件等网络操作。      </li>
+<li>清除发送状态；<br>设置NSR(REG_01)bit[5]=1bit[3]=1 bit[2]=1；</li>
+<li>设置IMR寄存器(REG_FF)PAR bit[7]=1，以启用RX／TX FIFOSRAM读／写地址指针自动返回功能；      </li>
+<li>通过IMR寄存器(REG_FF)PRM bit[0]／PTM bit[1]，对RX／TX中断使能。如果需要在一个数据帧发送完后产生一个中断，就应该将PTM      bit[1]置1，如果需要在接收到一帧新数据时产生一个中断，就应该将PRM bit[1]置1；     </li>
+<li>设置RCR寄存器，使能数据接收功能。</li>
+<li>NCR   (0x00): 08<br>NSR   (0x01): 80<br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 01<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 03<br>NCR   (0x00): 08<!-- 内部PHY全双工模式 --><br>NSR   (0x01): 80<!-- 6 LINKST连接状态 0为连接失败 --><br>TCR   (0x02): 00<br>TSRI  (0x03): 00<br>TSRII (0x04): 00<br>RCR   (0x05): 31<br>RSR   (0x06): 00<br>ORCR  (0x07): 00<br>CRR   (0x2C): 19<br>CSCR  (0x31): 00<br>RCSSR (0x32): 00<br>ISR   (0xFE): 20<br>IMR   (0xFF): 83<br>通过以上步骤，可以通过LED指示灯观测到DM9000A是否已成功初始化。<h2 id="1">1</h2>
+<span>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$</span> <h3 id="1-1">1.1</h3>
+<h3 id="1-2">1.2</h3>
+<h2 id="2">2</h2>
+<h1 id="End">End</h1>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/" data-id="ja7s34sh3qvxc1k8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/05/17/ds18b20驱动移植到stm32上/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DS18B20驱动移植到STM32上
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/05/15/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/06/25/移植freemodbus/">移植freemodbus</a>
+          </li>
+        
+          <li>
+            <a href="/2014/06/08/git使用/">Git使用</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/17/ds18b20驱动移植到stm32上/">DS18B20驱动移植到STM32上</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/16/在rt-thread下移植lwip到stm32、dm9000a/">在RT-Thread下移植LWip到STM32、DM9000A</a>
+          </li>
+        
+          <li>
+            <a href="/2014/05/15/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 Tiger Wang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
