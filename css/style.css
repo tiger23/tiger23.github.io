@@ -91,11 +91,11 @@ a img {
 }
 /* custom Font*/
 @font-face {
-  font-family: "Fh_Nicole";
+  font-family: "3d";
   font-weight: normal;
   font-style: normal;
-  src: url("../font/Fh_Nicole.eot");
-  src: url("../font/Fh_Nicole.eot?#iefix") format('embedded-opentype'), url("../font/Fh_Nicole.svg#Fh_Nicole") format('svg'), url("../font/Fh_Nicole.woff") format('woff'), url("../font/Fh_Nicole.ttf") format('truetype');
+  src: url("../font/solid.eot");
+  src: url("../font/solid.eot?#iefix") format('embedded-opentype'), url("../font/solid.svg#3d") format('svg'), url("../font/solid.woff") format('woff'), url("../font/solid.ttf") format('truetype');
 }
 /* icon Font */
 @font-face {
@@ -426,7 +426,7 @@ body >header a {
 }
 #textlogo h1.site-name {
   width: 86%;
-  font-family: "Fh_Nicole";
+  font-family: "3d";
   font-size: 200%;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -1785,7 +1785,7 @@ footer {
   }
 }
 .info {
-  font-family: "Fh_Nicole";
+  font-family: "3d";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 150%;
@@ -1859,7 +1859,7 @@ footer {
 .copyright {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Fh_Nicole";
+  font-family: "3d";
   width: 100%;
   color: #fff;
   text-align: center;
